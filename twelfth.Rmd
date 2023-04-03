@@ -1,0 +1,78 @@
+---
+title: "twelfth"
+author: "rita"
+date: "2023-04-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+
+## **Weight and MPG of Cars**
+
+```{r 1.1}
+cor.test(mtcars$wt, mtcars$mpg)
+
+
+```
+
+The two variables, weight and mpg, have a strong negative relationship as evident from both the Pearson test (above) and the graph (below).
+
+A Pearson test correlation that is close to -1 is evident of a strong negative relationship and these two factors got a -0.87.
+
+And as seen on the graph weight visibly increases mpg goes down. 
+
+```{r 1.2 , echo=FALSE}
+#mpg and wt
+ggplot(mtcars, aes(x=wt, y=mpg)) +
+  geom_point()+
+  geom_smooth(method=lm, se=FALSE) +
+  labs( title="Weight and MPG of Cars",
+        y= "Miles per Gallon",
+        x= "Weight (1000 lbs)")
+
+```
+
+## **Weight, MPG, and Type of Engine of Cars**
+
+
+```{r 2.1}
+cor.test(mtcars$mpg, mtcars$vs)
+```
+
+
+MPG and engine shape have a moderate to strong positive relationship as evident from both the Pearson test and the graph.
+
+The Pearson test correlation close to 1 is evident of a strong positive relationship, but this is only a .66 which is a little over halfway there.
+
+Cars with a higher mpg tend to have straight shaped engine. That can be easily seen on the graph as the upper half the y-axis tends to just be straight shaped. But there is a good mix of both in the middle. 
+
+```{r 2.2}
+cor.test(mtcars$wt, mtcars$vs)
+```
+
+Weight and engine shape have a moderate negative relationship as evident from both the Pearson test and the graph.
+
+The Pearson test correlation close to -1 is evident of a strong negative relationship, but this is only a -.55.
+
+Heavier cars tend to have v-shaped engine. That can be easily seen on the graph as from 3.5 down on the x-axis tends to just be v-shaped. But there is a good mix of both in the middle. 
+
+```{r 2.3, echo=FALSE}
+#mpg wt and vs
+ggplot(mtcars, aes(x=wt, y=mpg, shape=as.factor(vs), color=as.factor(vs))) +   
+  geom_point()+
+  geom_smooth(method=lm, se=FALSE)+
+  labs( title="Weight, MPG, and Type of Engine of Cars",
+        y= "Miles per Gallon",
+        x= "Weight (1000 lbs)")+
+  scale_colour_discrete(name  ="Type of Engine",
+                        breaks=c("0", "1"),
+                        labels=c("V-shaped", "Straight")) +
+  scale_shape_discrete(name  ="Type of Engine",
+                       breaks=c("0", "1"),
+                       labels=c("V-shaped", "Straight"))
+```
+
+
